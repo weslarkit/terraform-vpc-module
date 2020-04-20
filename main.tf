@@ -1,5 +1,19 @@
-variable az_count {}
-variable address_space {}
+variable az_count {
+  defaualt = 2
+  description = "Availability zone count for private and public subnet count"
+}
+variable address_space {
+  default = "172.50.0.0/16"
+  description = "Network address space for this VPC" 
+}
+variable private_route {
+  default = "0.0.0.0/0"
+  description = "Private routing address"
+}
+variable igw_route {
+  default = "0.0.0.0/0"
+  description = "Internet Gatewaay routing address"
+}
 # Fetch AZs in the current region
 data "aws_availability_zones" "available" {
 }
@@ -35,7 +49,7 @@ resource "aws_internet_gateway" "gw" {
 # Route the public subnet traffic through the IGW
 resource "aws_route" "internet_access" {
   route_table_id         = aws_vpc.main.main_route_table_id
-  destination_cidr_block = "0.0.0.0/0"
+  destination_cidr_block = var.igw_route
   gateway_id             = aws_internet_gateway.gw.id
 }
 
@@ -58,7 +72,7 @@ resource "aws_route_table" "private" {
   vpc_id = aws_vpc.main.id
 
   route {
-    cidr_block     = "0.0.0.0/0"
+    cidr_block     = var.private_route
     nat_gateway_id = element(aws_nat_gateway.gw.*.id, count.index)
   }
 }

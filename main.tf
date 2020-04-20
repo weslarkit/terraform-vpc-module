@@ -83,25 +83,3 @@ resource "aws_route_table_association" "private" {
   subnet_id      = element(aws_subnet.private.*.id, count.index)
   route_table_id = element(aws_route_table.private.*.id, count.index)
 }
-#resource "aws_security_group" "allow_ssh" {
-#  name        = "allow_ssh"
-#  description = "Allow SSU inbound traffic"
-#  vpc_id      = aws_vpc.main.id 
-#
-#  ingress {
-#    description = "SSH from Internet"
-#    from_port   = 0
-#    to_port     = 0
-#    protocol    = "-1"
-#    cidr_blocks = ["0.0.0.0/0"]
-#  }
-#
-#  egress {
-#    from_port   = 0
-#    to_port     = 0
-#    protocol    = "-1"
-#    cidr_blocks = ["0.0.0.0/0"]
-#  }
-#
-#}
-

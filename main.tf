@@ -1,5 +1,5 @@
 variable az_count {
-  defaualt = 2
+  default = 2
   description = "Availability zone count for private and public subnet count"
 }
 variable address_space {

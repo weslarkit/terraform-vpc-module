@@ -7,6 +7,6 @@ output "private_subnet" {
 output "vpc_obj" {
   value = "${aws_vpc.main}" 
 }
-output "sg_ec2" {
-  value = "${aws_security_group.allow_ssh}"
-}
+#output "sg_ec2" {
+#  value = "${aws_security_group.allow_ssh}"
+#}

@@ -2,6 +2,10 @@ variable az_count {
   default = 2
   description = "Availability zone count for private and public subnet count"
 }
+variable peer_routing_table {
+  default = null
+  description = "Passed in routing table"
+}
 variable address_space {
   default = "172.50.0.0/16"
   description = "Network address space for this VPC" 
@@ -81,5 +85,5 @@ resource "aws_route_table" "private" {
 resource "aws_route_table_association" "private" {
   count          = var.az_count
   subnet_id      = element(aws_subnet.private.*.id, count.index)
-  route_table_id = element(aws_route_table.private.*.id, count.index)
+  route_table_id = var.peer_routing_table.id #element(aws_route_table.private.*.id, count.index)
 }
